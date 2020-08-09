@@ -1,6 +1,7 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
-import { GetAllPostsQuery } from "../generated/graphql";
+import { GetAllPostsQuery, Post } from "../generated/graphql";
+import BlogItem from "./blocks/BlogItem";
 
 interface Props {}
 const getAllPosts = gql`
@@ -25,12 +26,13 @@ export const Posts: React.FC<Props> = (props) => {
 
   return (
     <div>
-      {data?.posts.map((post) => (
-        <div key={post.id}>
-          {post.title}
-          <div>{post.content}</div>
-        </div>
-      ))}
+      <section className="container columns is-vcentered is-centered">
+        {data?.posts.map((post) => (
+          <div className="column pt-6 px-6 py-6">
+            <BlogItem item={post as Post} />
+          </div>
+        ))}
+      </section>
     </div>
   );
 };

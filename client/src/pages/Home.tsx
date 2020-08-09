@@ -9,12 +9,12 @@ const Home = (props: Props) => {
   return (
     <div>
       <Hero />
-      <h2>
+      {/* <h2>
         My First Apollo app{" "}
         <span role="img" aria-label="rocket">
           🚀
         </span>
-      </h2>
+      </h2> */}
       <Posts />
     </div>
   );
