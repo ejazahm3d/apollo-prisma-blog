@@ -22,7 +22,7 @@ export const Posts: React.FC<Props> = (props) => {
   const { data, loading, error } = useQuery<GetAllPostsQuery>(getAllPosts);
   if (error) console.log(error);
   if (loading) return <div>Loading</div>;
-  console.log(data);
+
   return (
     <div>
       {data?.posts.map((post) => (
