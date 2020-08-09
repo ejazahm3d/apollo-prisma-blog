@@ -23,6 +23,13 @@ export const UserQuery = extendType({
         return UserService.findById(ctx, id);
       },
     });
+    t.list.field("users", {
+      type: User,
+      ///@ts-ignore
+      resolve: async (root, _, ctx) => {
+        return await UserService.fetchAllUsers(ctx);
+      },
+    });
   },
 });
 

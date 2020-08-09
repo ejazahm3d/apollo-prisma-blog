@@ -1,12 +1,33 @@
 import { Context } from "nexus-plugin-prisma/dist/schema/utils";
 import { Post } from "nexus-plugin-prisma/client";
 
-const fetchAllPosts = async ({ db }: Context, id: string): Promise<Post[]> => {
-  const posts = await db.post.findMany({ where: { authorId: id } });
+const fetchAllPosts = async ({ db }: Context): Promise<Post[]> => {
+  const posts = await db.post.findMany();
   if (posts === null) {
     throw new Error("No posts found");
   }
   return posts;
 };
 
-export default { fetchAllPosts };
+interface PostData {
+  title: string;
+  content: string;
+  slug: string;
+  authorId: string;
+}
+
+function createOne(ctx: Context, data: PostData): Promise<Post> {
+  return ctx.db.post.create({
+    data: {
+      title: data.title,
+      content: data.content,
+      slug: data.slug,
+      author: {
+        connect: {
+          id: data.authorId,
+        },
+      },
+    },
+  });
+}
+export default { fetchAllPosts, createOne };

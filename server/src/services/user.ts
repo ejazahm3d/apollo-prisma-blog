@@ -18,4 +18,8 @@ function createOne(ctx: Context, data: UserData): Promise<User> {
   return ctx.db.user.create({ data });
 }
 
-export default { findById, createOne };
+function fetchAllUsers(ctx: Context): Promise<User[]> {
+  return ctx.db.user.findMany();
+}
+
+export default { findById, createOne, fetchAllUsers };
