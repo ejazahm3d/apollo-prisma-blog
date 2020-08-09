@@ -16,6 +16,15 @@ export const Post = objectType({
 export const PostQuery = extendType({
   type: "Query",
   definition(t) {
+    t.field("post", {
+      type: Post,
+      args: {
+        id: idArg({ required: true }),
+      },
+      resolve: (root, { id }, ctx) => {
+        return PostService.findById(ctx, id);
+      },
+    });
     t.list.field("posts", {
       type: Post,
       resolve: (root, _, ctx): any => {

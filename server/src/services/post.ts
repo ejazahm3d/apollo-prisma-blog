@@ -1,6 +1,14 @@
 import { Context } from "nexus-plugin-prisma/dist/schema/utils";
 import { Post } from "nexus-plugin-prisma/client";
 
+async function findById({ db }: Context, id: string): Promise<Post> {
+  const post = await db.post.findOne({ where: { id } });
+  if (post === null) {
+    throw new Error("user not found");
+  }
+  return post;
+}
+
 const fetchAllPosts = async ({ db }: Context): Promise<Post[]> => {
   const posts = await db.post.findMany();
   if (posts === null) {
@@ -30,4 +38,4 @@ function createOne(ctx: Context, data: PostData): Promise<Post> {
     },
   });
 }
-export default { fetchAllPosts, createOne };
+export default { fetchAllPosts, createOne, findById };
